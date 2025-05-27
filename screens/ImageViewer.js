@@ -1,130 +1,76 @@
 import React, { useEffect, useState } from "react";
 import {
   View,
-  StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
   Text,
+  StyleSheet,
 } from "react-native";
-import {
-  Gesture,
-  GestureDetector,
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
-import { CATEGORIES } from "../assets/constants/data";
+import ImageViewer from "react-native-image-zoom-viewer";
 import { useNavigation } from "@react-navigation/native";
+import { CATEGORIES } from "../assets/constants/data";
 
 const ImageViewerScreen = ({ route }) => {
   const { productId, categoryId } = route.params;
-  const [imgUrl, setImgUrl] = useState(null);
-
+  const [imageUrls, setImageUrls] = useState([]);
+  const [initialIndex, setInitialIndex] = useState(0);
   const navigation = useNavigation();
 
   useEffect(() => {
     const category = CATEGORIES.find((cat) => cat.id === categoryId);
-    const product = category?.products.find((p) => p.id === productId);
-    if (product) {
-      setImgUrl(product.ficheImg);
-    }
+    if (!category) return;
+
+    const images = category.products.map((product) => ({
+      url: "",
+      props: {
+        source: product.ficheImg, // supports require(...) or remote uri
+      },
+    }));
+
+    const index = category.products.findIndex((p) => p.id === productId);
+    setImageUrls(images);
+    setInitialIndex(index >= 0 ? index : 0);
   }, [productId, categoryId]);
 
-  const scale = useSharedValue(1);
-  const offsetScale = useSharedValue(1);
-
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
-  const offsetX = useSharedValue(0);
-  const offsetY = useSharedValue(0);
-
-  // Pinch gesture for zooming
-  const pinchGesture = Gesture.Pinch()
-    .onBegin(() => {
-      offsetScale.value = scale.value;
-    })
-    .onUpdate((e) => {
-      scale.value = offsetScale.value * e.scale;
-
-      const dx = e.focalX - e.centerX;
-      const dy = e.focalY - e.centerY;
-
-      translateX.value = offsetX.value + dx * (scale.value - 1);
-      translateY.value = offsetY.value + dy * (scale.value - 1);
-    })
-    .onEnd(() => {
-      offsetX.value = translateX.value;
-      offsetY.value = translateY.value;
-      offsetScale.value = scale.value;
-    });
-
-  // Pan gesture for dragging
-  const panGesture = Gesture.Pan()
-    .onUpdate((e) => {
-      translateX.value = offsetX.value + e.translationX;
-      translateY.value = offsetY.value + e.translationY;
-    })
-    .onEnd(() => {
-      offsetX.value = translateX.value;
-      offsetY.value = translateY.value;
-    });
-
-  // Combine gestures to support both simultaneously
-  const composedGesture = Gesture.Simultaneous(pinchGesture, panGesture);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        { translateX: translateX.value },
-        { translateY: translateY.value },
-        { scale: scale.value },
-      ],
-    };
-  });
-
-  if (!imgUrl) {
+  if (imageUrls.length === 0) {
     return (
-      <View style={styles.container}>
+      <View style={styles.loading}>
         <ActivityIndicator size="large" color="#fff" />
       </View>
     );
   }
 
   return (
-    <GestureHandlerRootView>
-      <View style={styles.container}>
-        {/* Back button */}
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backText}>←</Text>
-        </TouchableOpacity>
+    <View style={styles.flex}>
+      {/* Back button */}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.backText}>←</Text>
+      </TouchableOpacity>
 
-        <GestureDetector gesture={composedGesture}>
-          <Animated.Image
-            source={imgUrl}
-            style={[styles.image, animatedStyle]}
-            resizeMode="contain"
-          />
-        </GestureDetector>
-      </View>
-    </GestureHandlerRootView>
+      <ImageViewer
+        imageUrls={imageUrls}
+        index={initialIndex}
+        backgroundColor="black"
+        enableSwipeDown
+        onSwipeDown={() => navigation.goBack()}
+        loadingRender={() => <ActivityIndicator size="large" color="#fff" />}
+        saveToLocalByLongPress={false}
+        enablePreload
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  flex: { flex: 1 },
+  loading: {
     flex: 1,
     backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
-  },
-  image: {
-    width: "90%",
-    height: "90%",
   },
   backButton: {
     position: "absolute",

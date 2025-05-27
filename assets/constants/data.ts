@@ -590,60 +590,66 @@ export const CATEGORIES: Category[] = [
       },
     ],
   },
-  // {
-  //   id: 9,
-  //   categorie: "Stress & Anxiété",
-  //   color: "#607d8b",
-  //   products: [
-  //     {
-  //       id: 1,
-  //       name: "Ansiovit®",
-  //       productImg: require("../images/product/ansiovit.jpg"),
-  //       ficheImg: require("../images/fiche/ansiovit.jpg"),
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Magnemar®",
-  //       productImg: require("../images/product/magnemar.jpg"),
-  //       ficheImg: require("../images/fiche/magnemar.jpg"),
-  //     },
-  //     {
-  //       id: 3,
-  //       name: "Neovimag®",
-  //       productImg: require("../images/product/neovimag.jpg"),
-  //       ficheImg: require("../images/fiche/neovimag.jpg"),
-  //     },
-  //     {
-  //       id: 4,
-  //       name: "Neovimag® Plus",
-  //       productImg: require("../images/product/neovimag_plus.jpg"),
-  //       ficheImg: require("../images/fiche/neovimag_plus.jpg"),
-  //     },
-  //     {
-  //       id: 5,
-  //       name: "Somnex®",
-  //       productImg: require("../images/product/somnex.jpg"),
-  //       ficheImg: require("../images/fiche/somnex.jpg"),
-  //     },
-  //     {
-  //       id: 6,
-  //       name: "Theramag®",
-  //       productImg: require("../images/product/theramag.jpg"),
-  //       ficheImg: require("../images/fiche/theramag.jpg"),
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: 10,
-  //   categorie: "Circulation",
-  //   color: "#8bc34a",
-  //   products: [
-  //     {
-  //       id: 1,
-  //       name: "Circulex®",
-  //       productImg: require("../images/product/circulex.jpg"),
-  //       ficheImg: require("../images/fiche/circulex.jpg"),
-  //     },
-  //   ],
-  // },
+  {
+    id: 9,
+    categorie: "Stress & Anxiété",
+    color: "#607d8b",
+    products: [
+      {
+        id: 1,
+        name: "Ansiovit®",
+        productImg: require("../images/product/ansiovit.png"),
+        ficheImg: require("../images/fiche/ansiovit.jpg"),
+      },
+      {
+        id: 2,
+        name: "Magnemar®",
+        productImg: require("../images/product/magnemar.png"),
+        ficheImg: require("../images/fiche/magnemar.jpg"),
+      },
+      {
+        id: 3,
+        name: "Neovimag®",
+        productImg: require("../images/product/neovimag.png"),
+        ficheImg: require("../images/fiche/neovimag.jpg"),
+      },
+      {
+        id: 4,
+        name: "Neovimag® Plus",
+        productImg: require("../images/product/neovimag_plus.png"),
+        ficheImg: require("../images/fiche/neovimag_plus.jpg"),
+      },
+      {
+        id: 5,
+        name: "Somnex®",
+        productImg: require("../images/product/somnex.png"),
+        ficheImg: require("../images/fiche/somnex.jpg"),
+      },
+      {
+        id: 6,
+        name: "Theramag®",
+        productImg: require("../images/product/theramag.png"),
+        ficheImg: require("../images/fiche/theramag.jpg"),
+      },
+      {
+        id: 7,
+        name: "Kalmatonine®",
+        productImg: require("../images/product/kalmatonine.png"),
+        ficheImg: require("../images/fiche/kalmatonine.png"),
+      },
+    ],
+  },
+  {
+    id: 10,
+    categorie: "Circulation",
+    color: "#8bc34a",
+    products: [
+      {
+        id: 1,
+        name: "Circulex®",
+        productImg: require("../images/product/circulex.png"),
+        ficheImg: require("../images/fiche/circulex.jpg"),
+      },
+    ],
+  },
 ];

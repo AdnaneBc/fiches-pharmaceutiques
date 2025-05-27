@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 180,
+    height: 200,
     borderRadius: 16,
     resizeMode: "contain",
-    marginBottom: 12,
+    marginBottom: 8,
   },
   label: {
     fontSize: 16,
